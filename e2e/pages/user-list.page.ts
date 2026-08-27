@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { gotoPath } from '../helpers/nav';
 
 export class UserListPage {
   readonly page: Page;
@@ -35,7 +36,7 @@ export class UserListPage {
   }
 
   async goto() {
-    await this.page.goto('/user-management', { waitUntil: 'domcontentloaded' });
+    await gotoPath(this.page, '/user-management');
     await this.discardIfOpen();
     await expect(this.heading).toBeVisible({ timeout: 20000 });
   }

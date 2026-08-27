@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { gotoPath } from '../helpers/nav';
 
 export class UserFormPage {
   readonly page: Page;
@@ -43,7 +44,7 @@ export class UserFormPage {
   }
 
   async gotoAdd() {
-    await this.page.goto('/user-management/add-user', { waitUntil: 'domcontentloaded' });
+    await gotoPath(this.page, '/user-management/add-user');
     await this.discardIfOpen();
     await expect(this.title).toBeVisible({ timeout: 20000 });
   }

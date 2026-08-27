@@ -6,8 +6,16 @@
     "cases:sync": "node scripts/sync-cases.mjs",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
-    "test:login": "playwright test specs/login.spec.ts --headed",
-    "test:user": "playwright test specs/user-management.spec.ts --headed",
+    "test:login": "playwright test specs/login.spec.ts --headed --project=login",
+    "test:user": "playwright test specs/user-management.spec.ts --headed --project=qa",
+    "test:user:smoke": "playwright test specs/user-management.spec.ts --headed --project=qa --grep USER-NAV-01",
     "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.0.0",
+    "dotenv": "^16.4.0",
+    "exceljs": "^4.4.0",
+    "typescript": "^5.6.0"
   }
 }

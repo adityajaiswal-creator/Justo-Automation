@@ -1,0 +1,4 @@
+.DS_Store
+test-results/
+.playwright-mcp/
+playwright-mcp/

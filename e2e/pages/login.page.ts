@@ -56,6 +56,8 @@ export class LoginPage {
 
   async loginWithOtp(email = env.email, otp = env.otp) {
     await this.page.goto('/auth/login', { waitUntil: 'domcontentloaded' });
+    await this.heading.or(this.otpBox(1)).or(this.identifier).first().waitFor({ timeout: 20000 }).catch(() => {});
+
     if (!this.page.url().includes('/auth/login')) return;
 
     if (await this.otpBox(1).isVisible().catch(() => false)) {
@@ -65,7 +67,7 @@ export class LoginPage {
       return;
     }
 
-    await expect(this.identifier).toBeVisible();
+    await expect(this.identifier).toBeVisible({ timeout: 15000 });
     await this.identifier.fill(email);
     await this.sendOtp.click();
     await this.dismissNotificationDialog();

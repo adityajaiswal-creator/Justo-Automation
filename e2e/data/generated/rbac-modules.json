@@ -1,0 +1,371 @@
+[
+  {
+    "id": "1",
+    "name": "User",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "2",
+    "name": "Role",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "3",
+    "name": "Lead",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "4",
+    "name": "Project",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "5",
+    "name": "Campaign",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "6",
+    "name": "Shift",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "7",
+    "name": "Team",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "8",
+    "name": "Pipeline",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "9",
+    "name": "Task",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "10",
+    "name": "Note",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "11",
+    "name": "Site Visit",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "12",
+    "name": "Import Export",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "13",
+    "name": "Scoring",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "14",
+    "name": "Routing",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "15",
+    "name": "Channel Partner",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "16",
+    "name": "Portal Management",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "17",
+    "name": "Token Management",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "18",
+    "name": "Driver Management",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "19",
+    "name": "Pickup Request Management",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "20",
+    "name": "Kyc",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "21",
+    "name": "Cheque Clearance",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "22",
+    "name": "Cti Config",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "23",
+    "name": "Leadgen Connector",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "24",
+    "name": "Opportunity",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "25",
+    "name": "Contact",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "26",
+    "name": "Custom Attribute",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "27",
+    "name": "GRE Walk In Visitors",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "28",
+    "name": "Custom Layout",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "29",
+    "name": "User Announcement",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "30",
+    "name": "AI Prompt",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "31",
+    "name": "Dashboard",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "32",
+    "name": "Dashboard Report",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "33",
+    "name": "Booking Management",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "34",
+    "name": "Geo Location",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "35",
+    "name": "Presales Dashboard",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "36",
+    "name": "CP Meeting",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "37",
+    "name": "Master Setting",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "38",
+    "name": "Project Daily Report",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "39",
+    "name": "Inventory",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "40",
+    "name": "Inventory Booking",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  },
+  {
+    "id": "41",
+    "name": "User Adaptation Report",
+    "source": "backend Resource enum",
+    "priority": "P2",
+    "automated": "No",
+    "skipReason": "Not automated yet",
+    "tags": ""
+  }
+]
