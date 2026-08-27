@@ -52,6 +52,18 @@ export function uniqueShift() {
   };
 }
 
+export function uniqueProject() {
+  const stamp = Date.now().toString().slice(-6);
+  return {
+    stamp,
+    name: `auto_proj_${stamp}`,
+    code: `AP${stamp}`,
+    moreName: `auto_proj_more_${stamp}`,
+    moreCode: `AM${stamp}`,
+    edited: `auto_proj_${stamp}_ed`,
+  };
+}
+
 export function catalogAnnotations(c: CatalogCase, extra: { env?: string } = {}) {
   return [
     { type: 'id', description: c.id },

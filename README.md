@@ -20,6 +20,7 @@ npm run test:headed      # headed local debug
 npm run test:login       # login project only
 npm run test:user        # user management
 npm run test:shift       # shift management
+npm run test:project     # project management
 npm run test:rbac        # RBAC create-role
 npm run test:user:smoke  # USER-NAV-01
 npm run lint
@@ -52,6 +53,6 @@ RBAC role cases assert dependency auto-grants on the form. Only `RBAC-ROLE-001` 
 ## Notes
 
 - One worker by default: tests share a QA tenant.
-- Mutating user/shift cases are serial and clean up created records in `afterAll`.
+- Mutating user/shift/project cases are serial and clean up created records in `afterAll`.
 - Permission cases that need extra users stay `automated=No` with skip reasons.
 - `scripts/automation-flags.mjs` only seeds the first XLSX. After that, Excel is the source of truth.

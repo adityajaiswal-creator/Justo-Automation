@@ -24,11 +24,13 @@ function assertNoMissing(label, cases, ids) {
 const loginIds = handlerIds('flows/login.handlers.ts');
 const userIds = handlerIds('flows/user-management.handlers.ts');
 const shiftIds = handlerIds('flows/shift-management.handlers.ts');
+const projectIds = handlerIds('flows/project-management.handlers.ts');
 const rbacIds = handlerIds('flows/rbac.handlers.ts');
 
 assertNoMissing('login', catalog('login'), loginIds);
 assertNoMissing('user', catalog('user-management'), userIds);
 assertNoMissing('shift', catalog('shift-management'), shiftIds);
+assertNoMissing('project', catalog('project-management'), projectIds);
 assertNoMissing(
   'rbac-ui',
   catalog('rbac-create-role').filter((c) => String(c.id).startsWith('RBAC-UI-')),
@@ -41,5 +43,5 @@ if (!rbacSrc.includes("startsWith('RBAC-ROLE-')")) {
 }
 
 console.log(
-  `Catalog contract ok (${loginIds.size} login, ${userIds.size} user, ${shiftIds.size} shift, ${rbacIds.size} rbac UI handlers)`,
+  `Catalog contract ok (${loginIds.size} login, ${userIds.size} user, ${shiftIds.size} shift, ${projectIds.size} project, ${rbacIds.size} rbac UI handlers)`,
 );

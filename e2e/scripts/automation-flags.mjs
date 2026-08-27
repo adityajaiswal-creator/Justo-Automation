@@ -107,6 +107,45 @@ export const SHIFT_NO = new Set([
   'SHIFT-PERM-03',
 ]);
 
+export const PROJECT_NO = new Set([
+  'PROJ-LIST-01',
+  'PROJ-LIST-02',
+  'PROJ-LIST-07',
+  'PROJ-LIST-24',
+  'PROJ-LIST-27',
+  'PROJ-LIST-29',
+  'PROJ-PERM-01',
+  'PROJ-PERM-02',
+  'PROJ-PERM-03',
+  'PROJ-PERM-04',
+  'PROJ-PERM-05',
+  'PROJ-PERM-06',
+  'PROJ-CREATE-17',
+  'PROJ-CREATE-18',
+  'PROJ-CREATE-19',
+  'PROJ-CREATE-44',
+  'PROJ-CREATE-45',
+  'PROJ-DETAILS-06',
+  'PROJ-DETAILS-10',
+  'PROJ-DETAILS-11',
+  'PROJ-USERS-06',
+  'PROJ-USERS-08',
+  'PROJ-DOCS-05',
+  'PROJ-DOCS-06',
+  'PROJ-DOCS-07',
+  'PROJ-DOCS-08',
+  'PROJ-SCRIPT-02',
+  'PROJ-EMAIL-02',
+  'PROJ-RERA-02',
+  'PROJ-RERA-03',
+  'PROJ-PICK-03',
+  'PROJ-INV-02',
+  'PROJ-INV-03',
+  'PROJ-INV-04',
+  'PROJ-INV-05',
+  'PROJ-INV-06',
+]);
+
 export const SKIP_REASON = {
   'USER-CREATE-02': 'Empty-state only; QA already has users',
   'USER-CREATE-22':
@@ -127,6 +166,42 @@ export const SKIP_REASON = {
   'SHIFT-PERM-01': 'Needs a user without Shift create',
   'SHIFT-PERM-02': 'Needs a user without Shift edit',
   'SHIFT-PERM-03': 'Needs a user without Shift read',
+  'PROJ-LIST-01': 'Empty-state only; QA already has projects',
+  'PROJ-LIST-02': 'Empty-state Add Project inlines create; needs a tenant with zero projects',
+  'PROJ-LIST-07': 'Needs a user without Project create. Do not mock via localStorage. Add limited-user fixture.',
+  'PROJ-LIST-24': 'Needs a project whose status is not active/inactive',
+  'PROJ-LIST-27': 'Empty-state only; QA already has projects',
+  'PROJ-LIST-29': 'Needs a forced GET /projects failure; do not mock the live QA API',
+  'PROJ-PERM-01': 'Needs a user without project show-in-menu',
+  'PROJ-PERM-02': 'Needs a user without Project read',
+  'PROJ-PERM-03': 'Needs a user without Project create',
+  'PROJ-PERM-04': 'Needs a user without Project edit',
+  'PROJ-PERM-05': 'Needs a guaranteed inactive project plus a limited-user assertion pass',
+  'PROJ-PERM-06': 'Needs a user without booking-channel-partner',
+  'PROJ-CREATE-17': 'Create New Location writes master data; keep manual until a disposable location fixture exists',
+  'PROJ-CREATE-18': 'Depends on PROJ-CREATE-17 manual location input',
+  'PROJ-CREATE-19': 'Depends on PROJ-CREATE-17 manual location input',
+  'PROJ-CREATE-44': 'Pending Creating... is a race against a fast QA API',
+  'PROJ-CREATE-45': 'Needs request-payload intercept of trimmed name/code',
+  'PROJ-DETAILS-06': 'Needs a pending checklist item with navigationTarget on the current project',
+  'PROJ-DETAILS-10': 'Requires forcing projectDetailsStore activeSidebarItem to inventory',
+  'PROJ-DETAILS-11': 'Requires forcing projectDetailsStore activeSidebarItem to approvers',
+  'PROJ-USERS-06': 'Needs an inactive project with original delete permission',
+  'PROJ-USERS-08': 'Needs an inactive project with original delete permission',
+  'PROJ-DOCS-05': 'Needs a controlled unsupported file type in the upload dialog',
+  'PROJ-DOCS-06': 'Do not upload a 25MB fixture to shared QA',
+  'PROJ-DOCS-07': 'Needs a sub-1KB file against live upload validation',
+  'PROJ-DOCS-08': 'Uploader maxFiles=1; extra file is a component-level check',
+  'PROJ-SCRIPT-02': 'Mutates Script/FAQ content on a shared project',
+  'PROJ-EMAIL-02': 'Needs a project with zero email provider configs',
+  'PROJ-RERA-02': 'RERA save validation needs a disposable RERA dialog fixture',
+  'PROJ-RERA-03': 'RERA QR upload needs image fixtures per number',
+  'PROJ-PICK-03': 'Needs an inactive project to assert pickup readOnly',
+  'PROJ-INV-02': 'Needs a project with a blank code',
+  'PROJ-INV-03': 'Needs excel inventory rows on the current project',
+  'PROJ-INV-04': 'Needs excel inventory upload CTA on the current project',
+  'PROJ-INV-05': 'Needs inventory units to filter',
+  'PROJ-INV-06': 'Needs an inactive project with inventory access',
 };
 
 export function flagsFor(id) {
@@ -134,13 +209,22 @@ export function flagsFor(id) {
     LOGIN_YES.has(id) ||
     USER_YES.has(id) ||
     (String(id).startsWith('SHIFT-') && !SHIFT_NO.has(id)) ||
+    (String(id).startsWith('PROJ-') && !PROJECT_NO.has(id)) ||
     /^(RBAC-UI-|RBAC-ROLE-)/.test(String(id))
       ? 'Yes'
       : 'No';
   let priority = 'P2';
-  if (/^(LOGIN|USER-NAV|SHIFT-NAV|RBAC-UI)/.test(id) || /CREATE-0[1-6]$/.test(id) || /CREATE-36|CREATE-11/.test(id)) {
+  if (
+    /^(LOGIN|USER-NAV|SHIFT-NAV|RBAC-UI|PROJ-NAV)/.test(id) ||
+    /CREATE-0[1-6]$/.test(id) ||
+    /CREATE-36|CREATE-11|PROJ-CREATE-41/.test(id)
+  ) {
     priority = 'P0';
-  } else if (/USER-LIST-0[1-8]|USER-CREATE-|USER-EDIT-0[139]|USER-ASSIGN-01|SHIFT-LIST-|SHIFT-CREATE-|SHIFT-EDIT-01/.test(id)) {
+  } else if (
+    /USER-LIST-0[1-8]|USER-CREATE-|USER-EDIT-0[139]|USER-ASSIGN-01|SHIFT-LIST-|SHIFT-CREATE-|SHIFT-EDIT-01|PROJ-LIST-|PROJ-CREATE-|PROJ-EDIT-0[1-5]|PROJ-DETAILS-0[1-5]/.test(
+      id,
+    )
+  ) {
     priority = 'P1';
   }
   const skipReason = automated === 'No' ? SKIP_REASON[id] || 'Not automated yet' : '';

@@ -16,6 +16,7 @@
     "test:user": "playwright test specs/user-management.spec.ts --project=qa",
     "test:user:smoke": "playwright test specs/user-management.spec.ts --project=qa --grep USER-NAV-01",
     "test:shift": "playwright test specs/shift-management.spec.ts --project=qa",
+    "test:project": "playwright test specs/project-management.spec.ts --project=qa",
     "test:rbac": "playwright test specs/rbac.spec.ts --project=qa",
     "test:ci": "playwright test --project=setup --project=login --project=qa",
     "report": "playwright show-report"
