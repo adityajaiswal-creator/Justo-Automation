@@ -1,6 +1,7 @@
 import type { Page } from '@playwright/test';
 import { assertE2ECredentials, env } from '../config/env';
 import { expect } from '../fixtures/test';
+import { expectLoggedIn } from '../helpers/auth';
 import type { CatalogCase } from '../helpers/catalog';
 import type { LoginPage } from '../pages/login.page';
 
@@ -58,8 +59,7 @@ const handlers: Record<string, (ctx: LoginCtx) => Promise<void>> = {
   },
   'LOGIN-07': async ({ page, loginPage }) => {
     await loginPage.loginWithOtp();
-    await expect(page).not.toHaveURL(/\/auth\/login/);
-    await expect(page.getByTestId('users-link')).toBeVisible({ timeout: 15000 });
+    await expectLoggedIn(page);
   },
 };
 
