@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { dismissDiscardDialog, isShowing, pressEscape } from '../helpers/dom';
 import { gotoPath } from '../helpers/nav';
 
 export class UserFormPage {
@@ -13,6 +14,8 @@ export class UserFormPage {
   readonly designation: Locator;
   readonly back: Locator;
   readonly salutation: Locator;
+  readonly shift: Locator;
+  readonly roles: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -26,6 +29,8 @@ export class UserFormPage {
     this.designation = page.getByTestId('designation-input');
     this.back = page.getByTestId('go-back-button');
     this.salutation = page.getByTestId('salutation-radio-group');
+    this.shift = page.getByTestId('shift-select').or(page.getByRole('button', { name: /select a shift/i }));
+    this.roles = page.getByRole('button', { name: /select roles/i });
   }
 
   primaryAction() {
@@ -37,10 +42,7 @@ export class UserFormPage {
   }
 
   async discardIfOpen() {
-    const discard = this.page.getByRole('button', { name: /^discard$/i });
-    if (await discard.isVisible().catch(() => false)) {
-      await discard.click();
-    }
+    await dismissDiscardDialog(this.page);
   }
 
   async gotoAdd() {
@@ -50,40 +52,57 @@ export class UserFormPage {
   }
 
   async openDropdown(placeholder: string) {
-    await this.page.keyboard.press('Escape').catch(() => {});
-    const trigger = this.page.getByText(placeholder, { exact: true }).first();
-    if (await trigger.isVisible().catch(() => false)) {
-      await trigger.click({ force: true });
-      return;
-    }
-    await this.page.getByRole('button', { name: placeholder }).first().click({ force: true });
+    await pressEscape(this.page);
+    const trigger = this.page.getByRole('button', { name: placeholder }).or(this.page.getByText(placeholder, { exact: true })).first();
+    await expect(trigger).toBeVisible();
+    await trigger.click();
   }
 
   async pickLoginMethod(label: string) {
     await this.openDropdown('Choose which login methods this user can use');
-    await this.page.getByRole('option', { name: label }).first().click({ force: true });
-    await this.page.keyboard.press('Escape').catch(() => {});
+    const option = this.page.getByRole('option', { name: label }).first();
+    await expect(option).toBeVisible();
+    await option.click();
+    await pressEscape(this.page);
   }
 
   async pickFirstRole() {
-    await this.page.keyboard.press('Escape').catch(() => {});
-    await this.page.locator('button').filter({ hasText: 'Select roles' }).first().click({ force: true });
-    await expect(this.page.getByRole('option').first()).toBeVisible({ timeout: 8000 });
-    await this.page.getByRole('option').first().click({ force: true });
-    await this.page.keyboard.press('Escape').catch(() => {});
+    await pressEscape(this.page);
+    await expect(this.roles.first()).toBeVisible();
+    await this.roles.first().click();
+    const option = this.page.getByRole('option').first();
+    await expect(option).toBeVisible({ timeout: 8000 });
+    await option.click();
+    await pressEscape(this.page);
   }
 
   async pickFirstShift() {
-    await this.page.keyboard.press('Escape').catch(() => {});
-    const exact = this.page.getByText('Select a shift', { exact: true });
-    if (await exact.isVisible().catch(() => false)) {
-      await exact.click({ force: true });
-    } else {
-      await this.page.getByText('Shift', { exact: true }).locator('xpath=following::button[1]').click({ force: true });
-    }
-    const item = this.page.locator('[data-slot="select-item"]').first();
+    await pressEscape(this.page);
+    const trigger = this.shift.or(this.page.getByText('Select a shift', { exact: true })).first();
+    await expect(trigger).toBeVisible();
+    await trigger.click();
+    const item = this.page.getByRole('option').first().or(this.page.locator('[data-slot="select-item"]').first());
     await expect(item).toBeVisible({ timeout: 8000 });
-    await item.click({ force: true });
-    await this.page.keyboard.press('Escape').catch(() => {});
+    await item.click();
+    await pressEscape(this.page);
+  }
+
+  async blurRolesWithoutPicking() {
+    await pressEscape(this.page);
+    await expect(this.roles.first()).toBeVisible();
+    await this.roles.first().click();
+    if (await isShowing(this.page.getByRole('option').first(), 3000)) {
+      await pressEscape(this.page);
+    }
+  }
+
+  async blurShiftWithoutPicking() {
+    await pressEscape(this.page);
+    const trigger = this.shift.or(this.page.getByText('Select a shift', { exact: true })).first();
+    await expect(trigger).toBeVisible();
+    await trigger.click();
+    if (await isShowing(this.page.getByRole('option').first().or(this.page.locator('[data-slot="select-item"]').first()), 3000)) {
+      await pressEscape(this.page);
+    }
   }
 }

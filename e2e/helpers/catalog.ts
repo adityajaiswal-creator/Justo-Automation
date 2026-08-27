@@ -33,3 +33,13 @@ export function uniqueUser() {
     name: `Auto${stamp}`,
   };
 }
+
+export function catalogAnnotations(c: CatalogCase, extra: { env?: string } = {}) {
+  return [
+    { type: 'id', description: c.id },
+    { type: 'priority', description: c.priority || 'P2' },
+    { type: 'automated', description: c.automated },
+    { type: 'expected', description: c.expected || '' },
+    ...(extra.env ? [{ type: 'env', description: extra.env }] : []),
+  ];
+}

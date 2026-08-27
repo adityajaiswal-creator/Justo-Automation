@@ -1,14 +1,10 @@
+import { env } from '../config/env';
 import { test } from '../fixtures/test';
-import { loadCatalog, uniqueUser } from '../helpers/catalog';
+import { catalogAnnotations, loadCatalog, uniqueUser } from '../helpers/catalog';
 import { runUserCase, type UserRunState } from '../flows/user-management.handlers';
+import { UserListPage } from '../pages/user-list.page';
 
 const cases = loadCatalog('user-management');
-const state: UserRunState = {
-  createdEmail: '',
-  createdName: '',
-  knownSearch: '',
-  unique: uniqueUser(),
-};
 
 const mutating = new Set([
   'USER-CREATE-36',
@@ -25,12 +21,9 @@ const mutating = new Set([
   'USER-ASSIGN-04',
 ]);
 
-function addCase(c: (typeof cases)[number]) {
-  test(`${c.id} — ${c.title}`, async ({ page, userList, userForm }) => {
-    test.info().annotations.push(
-      { type: 'priority', description: c.priority || 'P2' },
-      { type: 'automated', description: c.automated },
-    );
+function addCase(c: (typeof cases)[number], state: UserRunState) {
+  test(`${c.id} — ${c.title}`, { tag: '@user' }, async ({ page, userList, userForm }) => {
+    test.info().annotations.push(...catalogAnnotations(c, { env: env.name }));
     if (c.automated !== 'Yes') {
       test.skip(true, c.skipReason || 'Not automated yet');
     }
@@ -39,15 +32,39 @@ function addCase(c: (typeof cases)[number]) {
 }
 
 test.describe('User Management', () => {
+  test.describe.configure({ mode: 'parallel' });
+  const state: UserRunState = {
+    createdEmail: '',
+    createdName: '',
+    unique: uniqueUser(),
+  };
   for (const c of cases.filter((row) => !mutating.has(row.id))) {
-    addCase(c);
+    addCase(c, state);
   }
 });
 
 test.describe('User Management mutating flows', () => {
   test.describe.configure({ mode: 'serial' });
-  for (const c of cases.filter((row) => mutating.has(row.id))) {
-    addCase(c);
-  }
-});
+  const state: UserRunState = {
+    createdEmail: '',
+    createdName: '',
+    unique: uniqueUser(),
+  };
 
+  for (const c of cases.filter((row) => mutating.has(row.id))) {
+    addCase(c, state);
+  }
+
+  test.afterAll(async ({ browser }) => {
+    if (!state.createdName) return;
+    const context = await browser.newContext({ storageState: env.authFile, baseURL: env.baseURL });
+    const page = await context.newPage();
+    try {
+      const userList = new UserListPage(page);
+      await userList.goto();
+      await userList.deactivateRow(state.createdName);
+    } finally {
+      await context.close();
+    }
+  });
+});

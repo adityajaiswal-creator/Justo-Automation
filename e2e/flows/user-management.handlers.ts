@@ -1,13 +1,14 @@
 import type { Page } from '@playwright/test';
+import { env } from '../config/env';
 import { expect, test } from '../fixtures/test';
 import type { CatalogCase } from '../helpers/catalog';
+import { isShowing, pressEscape } from '../helpers/dom';
 import type { UserFormPage } from '../pages/user-form.page';
 import type { UserListPage } from '../pages/user-list.page';
 
 export type UserRunState = {
   createdEmail: string;
   createdName: string;
-  knownSearch: string;
   unique: { stamp: string; email: string; phone: string; name: string };
 };
 
@@ -20,17 +21,28 @@ export type UserCtx = {
 
 async function requireTable(userList: UserListPage) {
   await userList.goto();
-  const hasTable = await userList.hasTable();
-  test.skip(!hasTable, 'List is empty on this tenant');
-  return hasTable;
+  test.skip(!(await userList.hasTable()), 'List is empty on this tenant');
 }
 
-export async function runUserCase(c: CatalogCase, ctx: UserCtx) {
-  const handler = handlers[c.id];
-  if (!handler) {
-    throw new Error(`automated=Yes but no handler for ${c.id}`);
+function requireCreatedUser(state: UserRunState) {
+  if (!state.createdName) {
+    throw new Error('USER-CREATE-36 must create a user before this mutating case');
   }
-  await handler(ctx);
+}
+
+async function openCreatedUser(userList: UserListPage, state: UserRunState) {
+  await requireTable(userList);
+  requireCreatedUser(state);
+  await userList.openRowMenu(state.createdName);
+}
+
+async function openOwnUser(userList: UserListPage) {
+  await requireTable(userList);
+  await userList.openRowContaining(env.email);
+}
+
+function menuItem(page: Page, name: string) {
+  return page.getByText(name, { exact: true }).last();
 }
 
 const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
@@ -75,16 +87,15 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     const headers = await page.locator('thead').innerText();
     expect(headers).toMatch(/Name/i);
     expect(headers).toMatch(/Email/i);
+    expect(headers).toMatch(/Phone/i);
     expect(headers).toMatch(/Status/i);
+    expect(headers).toMatch(/Actions/i);
   },
   'USER-LIST-04': async ({ userList, page }) => {
     await requireTable(userList);
     await userList.manageColumns.click();
-    for (const label of ['Created At', 'Created By', 'Last Updated At', 'Last Updated By']) {
-      const item = page.getByText(label, { exact: true }).first();
-      if (await item.isVisible().catch(() => false)) await item.click().catch(() => {});
-    }
-    await page.keyboard.press('Escape');
+    await expect(page.getByText('Created At', { exact: true }).first()).toBeVisible();
+    await pressEscape(page);
     await expect(userList.manageColumns).toBeVisible();
   },
   'USER-LIST-05': async ({ userList }) => {
@@ -98,19 +109,20 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
   },
   'USER-LIST-08': async ({ userList }) => {
     await requireTable(userList);
-    test.skip(!(await userList.exportButton.isVisible().catch(() => false)), 'Export not visible');
     await expect(userList.exportButton).toBeVisible();
   },
-  'USER-LIST-10': async ({ userList, state }) => {
+  'USER-LIST-10': async ({ userList }) => {
     await requireTable(userList);
-    state.knownSearch = await userList.firstRowName();
-    await userList.searchFor(state.knownSearch);
-    await expect(userList.page.locator('tbody tr').first()).toBeVisible();
+    const name = await userList.firstRowName();
+    await userList.searchFor(name);
+    await expect(userList.row(name)).toBeVisible();
   },
-  'USER-LIST-11': async ({ userList }) => {
+  'USER-LIST-11': async ({ userList, page }) => {
     await requireTable(userList);
     await userList.searchFor('zzznouser999');
     await expect(userList.emptyState).toHaveCount(0);
+    await expect(userList.search).toBeVisible();
+    await expect(page.locator('tbody tr').filter({ hasText: 'zzznouser999' })).toHaveCount(0);
   },
   'USER-LIST-12': async ({ userList }) => {
     await requireTable(userList);
@@ -120,8 +132,9 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
   'USER-LIST-19': async ({ userList, page }) => {
     await requireTable(userList);
     const copy = page.locator('tbody tr').first().getByRole('button').filter({ has: page.locator('svg') }).first();
-    if (await copy.isVisible().catch(() => false)) await copy.click().catch(() => {});
-    await expect(page.locator('tbody')).toBeVisible();
+    await expect(copy).toBeVisible();
+    await copy.click();
+    await expect(page.getByText(/copied/i).first()).toBeVisible({ timeout: 5000 });
   },
   'USER-LIST-20': async ({ userList, page }) => {
     await requireTable(userList);
@@ -140,76 +153,61 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     const body = await page.locator('tbody').innerText();
     expect(body).toMatch(/active|inactive|pending/i);
   },
-  'USER-LIST-27': async ({ userList, page, state }) => {
+  'USER-LIST-27': async ({ userList, page }) => {
     await requireTable(userList);
-    await userList.openRowMenu(state.knownSearch);
-    await expect(page.getByText('Edit', { exact: true }).last()).toBeVisible();
-    await page.keyboard.press('Escape');
+    await userList.openRowMenu(await userList.firstRowName());
+    await expect(menuItem(page, 'Edit')).toBeVisible();
+    await pressEscape(page);
   },
-  'USER-LIST-28': async ({ userList, page, state }) => {
-    await requireTable(userList);
-    await userList.openRowMenu(state.knownSearch);
-    test.skip(
-      !(await page.getByText('Change Password', { exact: true }).last().isVisible().catch(() => false)),
-      'Not own row',
-    );
-    await page.keyboard.press('Escape');
+  'USER-LIST-28': async ({ userList, page }) => {
+    await openOwnUser(userList);
+    await expect(menuItem(page, 'Change Password')).toBeVisible();
+    await pressEscape(page);
   },
-  'USER-LIST-29': async ({ userList, page, state }) => {
+  'USER-LIST-29': async ({ userList, page }) => {
     await requireTable(userList);
-    await userList.openRowMenu(state.knownSearch);
-    test.skip(
-      !(await page.getByText('Set Password', { exact: true }).last().isVisible().catch(() => false)),
-      'Set Password not on this row',
-    );
-    await page.keyboard.press('Escape');
+    await userList.openRowMenu(await userList.firstRowName());
+    test.skip(!(await isShowing(menuItem(page, 'Set Password'), 2000)), 'Needs another user with Email/Password login');
+    await pressEscape(page);
   },
-  'USER-LIST-31': async ({ userList, page, state }) => {
+  'USER-LIST-31': async ({ userList, page }) => {
     await requireTable(userList);
-    await userList.openRowMenu(state.knownSearch);
-    test.skip(
-      !(await page.getByText('Assign Projects', { exact: true }).last().isVisible().catch(() => false)),
-      'Assign Projects not on this row',
-    );
-    await page.keyboard.press('Escape');
+    await userList.openRowMenu(await userList.firstRowName());
+    test.skip(!(await isShowing(menuItem(page, 'Assign Projects'), 2000)), 'Assign Projects not on this row');
+    await pressEscape(page);
   },
-  'USER-LIST-32': async ({ userList, page, state }) => {
+  'USER-LIST-32': async ({ userList, page }) => {
     await requireTable(userList);
-    await userList.openRowMenu(state.knownSearch);
-    test.skip(
-      !(await page.getByText('Resend Request', { exact: true }).last().isVisible().catch(() => false)),
-      'Row is not pending',
-    );
-    await page.keyboard.press('Escape');
+    await userList.openRowMenu(await userList.firstRowName());
+    test.skip(!(await isShowing(menuItem(page, 'Resend Request'), 2000)), 'Needs a pending user row');
+    await pressEscape(page);
   },
   'USER-LIST-34': async ({ userList }) => {
     await userList.goto();
-    test.skip(!(await userList.teamsTab.isVisible().catch(() => false)), 'No team module');
+    test.skip(!(await isShowing(userList.teamsTab, 1500)), 'No team module');
     test.skip(!(await userList.isEmpty()), 'Users exist');
     await expect(userList.teamsTab).toBeDisabled();
   },
   'USER-LIST-35': async ({ userList, page }) => {
     await userList.goto();
-    test.skip(!(await userList.teamsTab.isVisible().catch(() => false)), 'No team module');
+    test.skip(!(await isShowing(userList.teamsTab, 1500)), 'No team module');
     test.skip(await userList.isEmpty(), 'Empty list');
     await userList.teamsTab.click();
     await expect(page.getByText(/Total Teams|Manage Teams/i).first()).toBeVisible();
   },
   'USER-TEAM-01': async ({ userList }) => {
     await userList.goto();
-    test.skip(await userList.teamsTab.isVisible().catch(() => false), 'Team tab is visible');
+    test.skip(await isShowing(userList.teamsTab, 1500), 'Team tab is visible');
     await expect(userList.teamsTab).toHaveCount(0);
   },
   'USER-TEAM-03': async ({ userList, page }) => {
     await userList.goto();
-    test.skip(!(await userList.teamsTab.isVisible().catch(() => false)), 'No team tab');
+    test.skip(!(await isShowing(userList.teamsTab, 1500)), 'No team tab');
     test.skip(await userList.isEmpty(), 'Empty list');
     await userList.teamsTab.click();
-    test.skip(
-      !(await page.getByTestId('create-new-team-button').isVisible().catch(() => false)),
-      'No team create or button missing',
-    );
-    await expect(page.getByTestId('create-new-team-button')).toBeVisible();
+    const createTeam = page.getByTestId('create-new-team-button');
+    test.skip(!(await isShowing(createTeam, 2000)), 'No team create permission');
+    await expect(createTeam).toBeVisible();
   },
   'USER-LIST-36': async ({ userList, page }) => {
     await requireTable(userList);
@@ -245,7 +243,7 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
   'USER-CREATE-06': async ({ userForm, page }) => {
     await userForm.gotoAdd();
     const statusSwitch = page.getByRole('switch').first();
-    test.skip(!(await statusSwitch.isVisible().catch(() => false)), 'No status switch');
+    test.skip(!(await isShowing(statusSwitch, 2000)), 'No status switch on add form');
     await statusSwitch.click();
     await expect(page.getByRole('button', { name: /^save$/i })).toBeVisible();
     await statusSwitch.click();
@@ -305,47 +303,34 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await userForm.gotoAdd();
     await userForm.email.fill(`${'a'.repeat(90)}@idx.com`);
     await userForm.email.blur();
-    test.skip(
-      !(await page.getByText(/Email must be at most 100/i).isVisible().catch(() => false)),
-      'Max error not shown',
-    );
+    await expect(page.getByText(/Email must be at most 100/i)).toBeVisible();
   },
   'USER-CREATE-15': async ({ userForm, page }) => {
     await userForm.gotoAdd();
     await userForm.phone.fill('');
     await userForm.phone.blur();
-    test.skip(
-      !(await page.getByText(/Phone number is required|Phone number cannot be empty/i).first().isVisible().catch(() => false)),
-      'Required message not shown yet',
-    );
+    await expect(page.getByText(/Phone number is required|Phone number cannot be empty/i).first()).toBeVisible();
   },
   'USER-CREATE-16': async ({ userForm, page }) => {
     await userForm.gotoAdd();
     await userForm.phone.fill('5551234567');
     await userForm.phone.blur();
-    test.skip(
-      !(await page.getByText(/valid 10-digit phone/i).isVisible().catch(() => false)),
-      'Format error not shown',
-    );
+    await expect(page.getByText(/valid 10-digit phone/i)).toBeVisible();
   },
   'USER-CREATE-17': async ({ userForm, page }) => {
     await userForm.gotoAdd();
+    await userForm.openDropdown('Choose which login methods this user can use');
+    await pressEscape(page);
     await userForm.firstName.fill('Ada');
     await userForm.firstName.blur();
-    test.skip(
-      !(await page.getByText(/Allowed login methods is required/i).isVisible().catch(() => false)),
-      'Error after other fills',
-    );
+    await expect(page.getByText(/Allowed login methods is required/i)).toBeVisible();
   },
   'USER-CREATE-18': async ({ userForm, page }) => {
     await userForm.gotoAdd();
     await userForm.pickLoginMethod('Email / Password');
     await userForm.password.fill('');
     await userForm.password.blur();
-    test.skip(
-      !(await page.getByText(/Password is required when Email\/Password/i).isVisible().catch(() => false)),
-      'Required message missing',
-    );
+    await expect(page.getByText(/Password is required when Email\/Password/i)).toBeVisible();
   },
   'USER-CREATE-19': async ({ userForm, page }) => {
     await userForm.gotoAdd();
@@ -366,22 +351,21 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await userForm.pickLoginMethod('Email / Password');
     await userForm.password.fill('x'.repeat(256));
     await userForm.password.blur();
-    test.skip(
-      !(await page.getByText(/Password must be at most 255/i).isVisible().catch(() => false)),
-      'Max error missing',
-    );
+    await expect(page.getByText(/Password must be at most 255/i)).toBeVisible();
   },
   'USER-CREATE-21': async ({ userForm, page }) => {
     await userForm.gotoAdd();
+    await userForm.blurRolesWithoutPicking();
     await userForm.firstName.fill('Ada');
     await userForm.firstName.blur();
-    test.skip(!(await page.getByText('Role is required').isVisible().catch(() => false)), 'Message not visible yet');
+    await expect(page.getByText('Role is required')).toBeVisible();
   },
   'USER-CREATE-23': async ({ userForm, page }) => {
     await userForm.gotoAdd();
+    await userForm.blurShiftWithoutPicking();
     await userForm.firstName.fill('Ada');
     await userForm.firstName.blur();
-    test.skip(!(await page.getByText('Shift is required').isVisible().catch(() => false)), 'Message not visible yet');
+    await expect(page.getByText('Shift is required')).toBeVisible();
   },
   'USER-CREATE-27': async ({ userForm, page }) => {
     await userForm.gotoAdd();
@@ -432,7 +416,7 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await userForm.firstName.fill('Dirty');
     await userForm.cancel().click();
     await expect(page.getByText('Unsaved Changes').first()).toBeVisible();
-    await page.keyboard.press('Escape');
+    await pressEscape(page);
     await expect(page).toHaveURL(/\/add-user/);
   },
   'USER-CREATE-42': async ({ userForm, page }) => {
@@ -461,7 +445,9 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     );
     await userForm.primaryAction().click();
     const res = await createPost;
-    expect(res.ok(), `POST /users ${res.status()}`).toBeTruthy();
+    if (!res.ok()) {
+      throw new Error(`POST /users ${res.status()}`);
+    }
     state.createdEmail = state.unique.email;
     state.createdName = state.unique.name;
   },
@@ -472,7 +458,7 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await expect(page.getByText(/valid 10-digit|Phone number is required/i)).toHaveCount(0);
   },
   'USER-CREATE-38': async ({ userForm, page, state }) => {
-    test.skip(!state.createdEmail, 'No created user to duplicate');
+    requireCreatedUser(state);
     await userForm.gotoAdd();
     await userForm.firstName.fill(state.unique.name);
     await userForm.lastName.fill('User');
@@ -485,35 +471,31 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await expect(page).toHaveURL(/\/add-user/);
   },
   'USER-NAV-03': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    await page.getByText('Edit', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    await menuItem(page, 'Edit').click();
     await expect(page).toHaveURL(/\/edit-user\//);
   },
   'USER-EDIT-01': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    await page.getByText('Edit', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    await menuItem(page, 'Edit').click();
     await expect(page).toHaveURL(/\/edit-user\//);
     await expect(page.getByTestId('user-add-edit-title')).toHaveText(/edit user/i);
   },
   'USER-EDIT-02': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    await page.getByText('Edit', { exact: true }).last().click();
-    test.skip(!(await page.getByText(/created by/i).first().isVisible().catch(() => false)), 'Metadata missing');
+    await openCreatedUser(userList, state);
+    await menuItem(page, 'Edit').click();
+    await expect(page.getByText(/created by/i).first()).toBeVisible();
+    await expect(page.getByText(/last updated/i).first()).toBeVisible();
   },
   'USER-EDIT-03': async ({ userList, page, state, userForm }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    await page.getByText('Edit', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    await menuItem(page, 'Edit').click();
     await expect(page.getByRole('button', { name: /^update$/i })).toBeVisible();
     await userForm.discardIfOpen();
   },
   'USER-EDIT-09': async ({ userList, page, state, userForm }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    await page.getByText('Edit', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    await menuItem(page, 'Edit').click();
     await expect(page).toHaveURL(/\/edit-user\//);
     await userForm.designation.fill(`QA ${state.unique.stamp}`);
     await userForm.designation.blur();
@@ -524,93 +506,63 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await expect(page.getByRole('button', { name: /^update$/i })).toBeEnabled();
     await page.getByRole('button', { name: /^update$/i }).click();
     const res = await updatePut;
-    expect(res.ok(), `PATCH ${res.status()}`).toBeTruthy();
+    if (!res.ok()) {
+      throw new Error(`PATCH ${res.status()}`);
+    }
   },
   'USER-NAV-04': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    test.skip(
-      !(await page.getByText('Assign Projects', { exact: true }).last().isVisible().catch(() => false)),
-      'Menu item missing',
-    );
-    await page.getByText('Assign Projects', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    const assign = menuItem(page, 'Assign Projects');
+    await expect(assign).toBeVisible();
+    await assign.click();
     await expect(page).toHaveURL(/\/assign-projects\//);
   },
   'USER-ASSIGN-01': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    test.skip(
-      !(await page.getByText('Assign Projects', { exact: true }).last().isVisible().catch(() => false)),
-      'Menu item missing',
-    );
-    await page.getByText('Assign Projects', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    const assign = menuItem(page, 'Assign Projects');
+    await expect(assign).toBeVisible();
+    await assign.click();
     await expect(page.getByTestId('assign-projects-title').or(page.getByText('Assign Projects').first())).toBeVisible();
   },
   'USER-ASSIGN-02': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    test.skip(
-      !(await page.getByText('Assign Projects', { exact: true }).last().isVisible().catch(() => false)),
-      'Did not open',
-    );
-    await page.getByText('Assign Projects', { exact: true }).last().click();
-    test.skip(
-      !(await page.getByText('No Active Projects found.').isVisible().catch(() => false)),
-      'Already has projects',
-    );
+    await openCreatedUser(userList, state);
+    const assign = menuItem(page, 'Assign Projects');
+    await expect(assign).toBeVisible();
+    await assign.click();
+    test.skip(!(await isShowing(page.getByText('No Active Projects found.'), 3000)), 'Already has projects');
+    await expect(page.getByText('No Active Projects found.')).toBeVisible();
   },
   'USER-ASSIGN-03': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    test.skip(
-      !(await page.getByText('Assign Projects', { exact: true }).last().isVisible().catch(() => false)),
-      'Did not open',
-    );
-    await page.getByText('Assign Projects', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    const assign = menuItem(page, 'Assign Projects');
+    await expect(assign).toBeVisible();
+    await assign.click();
     await expect(page.getByText('Active Projects')).toBeVisible();
   },
   'USER-ASSIGN-04': async ({ userList, page, state }) => {
-    await userList.goto();
-    await userList.openRowMenu(state.createdName || state.knownSearch);
-    test.skip(
-      !(await page.getByText('Assign Projects', { exact: true }).last().isVisible().catch(() => false)),
-      'Did not open',
-    );
-    await page.getByText('Assign Projects', { exact: true }).last().click();
+    await openCreatedUser(userList, state);
+    const assign = menuItem(page, 'Assign Projects');
+    await expect(assign).toBeVisible();
+    await assign.click();
     const assignBtn = page.getByRole('button', { name: /assign project/i }).first();
-    test.skip(!(await assignBtn.isVisible().catch(() => false)), 'Assign Project missing');
+    await expect(assignBtn).toBeVisible();
     await assignBtn.click();
     await expect(page.getByText('You can assign the project to the user now.')).toBeVisible();
-    await page.keyboard.press('Escape');
+    await pressEscape(page);
   },
   'USER-PWD-01': async ({ userList, page }) => {
-    await userList.goto();
-    await userList.openRowMenu();
-    test.skip(
-      !(await page.getByText('Change Password', { exact: true }).last().isVisible().catch(() => false)),
-      'Not on own row',
-    );
-    await page.getByText('Change Password', { exact: true }).last().click();
+    await openOwnUser(userList);
+    await menuItem(page, 'Change Password').click();
     await expect(page.getByTestId('change-password-new')).toBeVisible();
   },
   'USER-PWD-10': async ({ userList, page }) => {
-    await userList.goto();
-    await userList.openRowMenu();
-    test.skip(
-      !(await page.getByText('Change Password', { exact: true }).last().isVisible().catch(() => false)),
-      'Dialog not opened',
-    );
-    await page.getByText('Change Password', { exact: true }).last().click();
+    await openOwnUser(userList);
+    await menuItem(page, 'Change Password').click();
     await expect(page.getByTestId('change-password-submit')).toBeDisabled();
   },
   'USER-PWD-04': async ({ userList, page }) => {
-    await userList.goto();
-    await userList.openRowMenu();
-    test.skip(
-      !(await page.getByText('Change Password', { exact: true }).last().isVisible().catch(() => false)),
-      'Dialog not opened',
-    );
-    await page.getByText('Change Password', { exact: true }).last().click();
+    await openOwnUser(userList);
+    await menuItem(page, 'Change Password').click();
     await page.getByTestId('change-password-old').fill('Oldpass1!');
     await page.getByTestId('change-password-new').fill('password');
     await page.getByTestId('change-password-confirm').fill('password');
@@ -618,13 +570,8 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await expect(page.getByText(/upper, lower, number/i).first()).toBeVisible();
   },
   'USER-PWD-05': async ({ userList, page }) => {
-    await userList.goto();
-    await userList.openRowMenu();
-    test.skip(
-      !(await page.getByText('Change Password', { exact: true }).last().isVisible().catch(() => false)),
-      'Dialog not opened',
-    );
-    await page.getByText('Change Password', { exact: true }).last().click();
+    await openOwnUser(userList);
+    await menuItem(page, 'Change Password').click();
     await page.getByTestId('change-password-old').fill('Oldpass1!');
     await page.getByTestId('change-password-new').fill('Abcd1234!');
     await page.getByTestId('change-password-confirm').fill('Abcd1234?');
@@ -632,41 +579,41 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
     await expect(page.getByText(/do not match/i)).toBeVisible();
   },
   'USER-PWD-09': async ({ userList, page }) => {
-    await userList.goto();
-    await userList.openRowMenu();
-    test.skip(
-      !(await page.getByText('Change Password', { exact: true }).last().isVisible().catch(() => false)),
-      'Dialog not opened',
-    );
-    await page.getByText('Change Password', { exact: true }).last().click();
+    await openOwnUser(userList);
+    await menuItem(page, 'Change Password').click();
     await page.getByRole('button', { name: /^cancel$/i }).last().click();
     await expect(page.getByTestId('change-password-new')).toHaveCount(0);
   },
   'USER-NAV-05': async ({ userList, page }) => {
     await userList.goto();
-    if (await userList.syncButton.isVisible().catch(() => false)) {
-      await userList.syncButton.click();
-    } else {
-      await page.goto('/user-management/sync-user-data', { waitUntil: 'domcontentloaded' });
-    }
+    await expect(userList.syncButton).toBeVisible();
+    await userList.syncButton.click();
     await expect(page).toHaveURL(/\/sync-user-data/);
   },
   'USER-SYNC-01': async ({ userList, page }) => {
     await userList.goto();
-    test.skip(!(await userList.syncButton.isVisible().catch(() => false)), 'Sync button hidden');
+    await expect(userList.syncButton).toBeVisible();
     await userList.syncButton.click();
     await expect(page).toHaveURL(/\/sync-user-data/);
   },
   'USER-SYNC-02': async ({ userList, page }) => {
     await userList.goto();
-    if (await userList.syncButton.isVisible().catch(() => false)) {
-      await userList.syncButton.click();
-    } else {
-      await page.goto('/user-management/sync-user-data', { waitUntil: 'domcontentloaded' });
-    }
+    await expect(userList.syncButton).toBeVisible();
+    await userList.syncButton.click();
     test.skip(
-      !(await page.getByText('Select a configuration first').isVisible().catch(() => false)),
+      !(await isShowing(page.getByText('Select a configuration first'), 3000)),
       'Config may already be selected',
     );
+    await expect(page.getByText('Select a configuration first')).toBeVisible();
   },
 };
+
+export const userHandlerIds = new Set(Object.keys(handlers));
+
+export async function runUserCase(c: CatalogCase, ctx: UserCtx) {
+  const handler = handlers[c.id];
+  if (!handler) {
+    throw new Error(`automated=Yes but no handler for ${c.id}`);
+  }
+  await handler(ctx);
+}

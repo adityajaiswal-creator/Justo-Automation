@@ -4,3 +4,4 @@ blob-report/
 .auth/
 node_modules/
 .env
+eslint-report.json

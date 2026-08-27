@@ -1,4 +1,4 @@
-/** Cases with a Playwright handler. Edit Excel later; this seeds the first XLSX. */
+/** Seeds the first XLSX only. After that, Excel is source of truth. Keep in sync with flow handlers. */
 
 export const LOGIN_YES = new Set([
   'LOGIN-01',

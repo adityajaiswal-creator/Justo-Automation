@@ -1,5 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { env } from '../config/env';
+import { env, assertE2ECredentials } from '../config/env';
+import { isShowing } from '../helpers/dom';
 
 export class LoginPage {
   readonly page: Page;
@@ -39,11 +40,8 @@ export class LoginPage {
 
   async dismissNotificationDialog() {
     const proceed = this.page.getByRole('button', { name: 'Proceed to Login' });
-    try {
-      await proceed.waitFor({ timeout: 4000 });
+    if (await isShowing(proceed, 4000)) {
       await proceed.click();
-    } catch {
-      /* already allowed */
     }
   }
 
@@ -55,12 +53,13 @@ export class LoginPage {
   }
 
   async loginWithOtp(email = env.email, otp = env.otp) {
+    assertE2ECredentials();
     await this.page.goto('/auth/login', { waitUntil: 'domcontentloaded' });
-    await this.heading.or(this.otpBox(1)).or(this.identifier).first().waitFor({ timeout: 20000 }).catch(() => {});
+    await expect(this.heading.or(this.otpBox(1)).or(this.identifier).first()).toBeVisible({ timeout: 20000 });
 
     if (!this.page.url().includes('/auth/login')) return;
 
-    if (await this.otpBox(1).isVisible().catch(() => false)) {
+    if (await isShowing(this.otpBox(1), 2000)) {
       await this.fillOtp(otp);
       await this.verifyButton.click();
       await this.page.waitForURL((url) => !url.pathname.includes('/auth/login'), { timeout: 20000 });

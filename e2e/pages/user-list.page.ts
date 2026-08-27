@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { dismissDiscardDialog, isShowing } from '../helpers/dom';
 import { gotoPath } from '../helpers/nav';
 
 export class UserListPage {
@@ -13,10 +14,11 @@ export class UserListPage {
   readonly teamsTab: Locator;
   readonly usersLink: Locator;
   readonly manageColumns: Locator;
+  readonly table: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.heading = page.getByText('User Management').first();
+    this.heading = page.getByRole('heading', { name: /user management/i }).or(page.getByText('User Management', { exact: true })).first();
     this.search = page.getByPlaceholder('Search by Name, Phone');
     this.createButton = page.getByTestId('create-new-user-button');
     this.syncButton = page.getByTestId('sync-data-button');
@@ -26,31 +28,30 @@ export class UserListPage {
     this.teamsTab = page.getByText('Manage Teams', { exact: true });
     this.usersLink = page.getByTestId('users-link');
     this.manageColumns = page.getByRole('button', { name: /manage column/i });
-  }
-
-  async discardIfOpen() {
-    const discard = this.page.getByRole('button', { name: /^discard$/i });
-    if (await discard.isVisible().catch(() => false)) {
-      await discard.click();
-    }
+    this.table = page.getByTestId('user-list-table').or(page.locator('tbody'));
   }
 
   async goto() {
     await gotoPath(this.page, '/user-management');
-    await this.discardIfOpen();
+    await dismissDiscardDialog(this.page);
     await expect(this.heading).toBeVisible({ timeout: 20000 });
   }
 
   async isEmpty() {
-    return this.emptyState.isVisible().catch(() => false);
+    return isShowing(this.emptyState, 1500);
   }
 
   async hasTable() {
-    return this.search.isVisible().catch(() => false);
+    return isShowing(this.search, 1500);
+  }
+
+  row(text?: string) {
+    const rows = this.page.locator('tbody tr');
+    return text ? rows.filter({ hasText: text }).first() : rows.first();
   }
 
   async firstRowName() {
-    const text = await this.page.locator('tbody tr').first().locator('td').first().innerText();
+    const text = await this.row().locator('td').first().innerText();
     return text.split('\n')[0].trim();
   }
 
@@ -58,15 +59,44 @@ export class UserListPage {
     await this.search.fill(value);
     await this.search.press('Enter');
     await expect(this.search).toHaveValue(value);
-    await this.page.locator('tbody tr, [data-testid="user-list-table"]').first().waitFor({ timeout: 10000 }).catch(() => {});
+    await expect(this.table.first()).toBeVisible({ timeout: 10000 });
   }
 
   async openRowMenu(searchText?: string) {
-    if (searchText) await this.searchFor(searchText);
-    const row = this.page.locator('tbody tr').first();
+    if (searchText) {
+      await this.openRowContaining(searchText);
+      return;
+    }
+    await this.openRowActions(this.row());
+  }
+
+  async openRowContaining(text: string) {
+    let match = this.row(text);
+    if (!(await isShowing(match, 1500))) {
+      await this.searchFor(text);
+      match = this.row(text);
+    }
+    await this.openRowActions(match);
+  }
+
+  private async openRowActions(row: Locator) {
     await expect(row).toBeVisible({ timeout: 10000 });
     const actionsBtn = row.locator('td').last().getByRole('button').first();
     await actionsBtn.scrollIntoViewIfNeeded();
     await actionsBtn.click();
+  }
+
+  async deactivateRow(name: string) {
+    await this.searchFor(name);
+    const statusSwitch = this.row(name).getByRole('switch');
+    if (!(await isShowing(statusSwitch, 3000)) || !(await statusSwitch.isEnabled())) {
+      return false;
+    }
+    await statusSwitch.click();
+    const confirm = this.page.getByRole('button', { name: /confirm/i });
+    if (await isShowing(confirm, 4000)) {
+      await confirm.click();
+    }
+    return true;
   }
 }

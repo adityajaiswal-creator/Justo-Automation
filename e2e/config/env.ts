@@ -15,9 +15,18 @@ const defaults: Record<string, string> = {
 export const env = {
   name: envName,
   baseURL: process.env.E2E_BASE_URL || defaults[envName] || defaults.qa,
-  email: process.env.E2E_EMAIL || 'admin@idx.com',
-  otp: process.env.E2E_OTP || '456789',
+  email: process.env.E2E_EMAIL?.trim() || '',
+  otp: process.env.E2E_OTP?.trim() || '',
   headed: process.env.E2E_HEADED === 'true' || process.env.E2E_HEADED === '1',
+  channel: process.env.E2E_CHANNEL?.trim() || (process.env.CI ? '' : 'chrome'),
   authFile: path.join(e2eRoot, '.auth', 'user.json'),
   e2eRoot,
 };
+
+export function assertE2ECredentials() {
+  if (!env.email || !env.otp) {
+    throw new Error(
+      'Missing E2E_EMAIL or E2E_OTP. Copy e2e/.env.example to e2e/.env and set credentials. Do not commit .env.',
+    );
+  }
+}
