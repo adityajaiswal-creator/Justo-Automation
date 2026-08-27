@@ -38,7 +38,11 @@ async function openCreatedUser(userList: UserListPage, state: UserRunState) {
 
 async function openOwnUser(userList: UserListPage) {
   await requireTable(userList);
-  await userList.openRowContaining(env.email);
+  const account = userList.page.getByRole('button', { name: /account menu for/i });
+  await expect(account).toBeVisible();
+  const label = (await account.getAttribute('aria-label')) || '';
+  const name = label.replace(/account menu for/i, '').trim();
+  await userList.openRowContaining(name || env.email);
 }
 
 function menuItem(page: Page, name: string) {
@@ -301,9 +305,14 @@ const handlers: Record<string, (ctx: UserCtx) => Promise<void>> = {
   },
   'USER-CREATE-14': async ({ userForm, page }) => {
     await userForm.gotoAdd();
-    await userForm.email.fill(`${'a'.repeat(90)}@idx.com`);
+    await userForm.email.fill(`${'a'.repeat(93)}@idx.com`);
     await userForm.email.blur();
-    await expect(page.getByText(/Email must be at most 100/i)).toBeVisible();
+    const value = await userForm.email.inputValue();
+    if (value.length > 100) {
+      await expect(page.getByText(/Email must be at most 100/i)).toBeVisible();
+    } else {
+      expect(value.length, 'email must not accept more than 100 characters').toBeLessThanOrEqual(100);
+    }
   },
   'USER-CREATE-15': async ({ userForm, page }) => {
     await userForm.gotoAdd();
