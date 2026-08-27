@@ -98,6 +98,15 @@ export const USER_YES = new Set([
   'USER-SESS-01',
 ]);
 
+export const SHIFT_NO = new Set([
+  'SHIFT-LIST-02',
+  'SHIFT-LIST-07',
+  'SHIFT-LIST-13',
+  'SHIFT-PERM-01',
+  'SHIFT-PERM-02',
+  'SHIFT-PERM-03',
+]);
+
 export const SKIP_REASON = {
   'USER-CREATE-02': 'Empty-state only; QA already has users',
   'USER-CREATE-22':
@@ -112,14 +121,26 @@ export const SKIP_REASON = {
   'USER-PERM-02': 'Needs a user without create',
   'USER-PERM-03': 'Needs a user without edit',
   'USER-PERM-05': 'Needs a user without show-in-menu',
+  'SHIFT-LIST-02': 'Needs a user without Shift create',
+  'SHIFT-LIST-07': 'Needs a shift with a missing weekday schedule',
+  'SHIFT-LIST-13': 'Needs a row with no edit/create/delete',
+  'SHIFT-PERM-01': 'Needs a user without Shift create',
+  'SHIFT-PERM-02': 'Needs a user without Shift edit',
+  'SHIFT-PERM-03': 'Needs a user without Shift read',
 };
 
 export function flagsFor(id) {
-  const automated = LOGIN_YES.has(id) || USER_YES.has(id) ? 'Yes' : 'No';
+  const automated =
+    LOGIN_YES.has(id) ||
+    USER_YES.has(id) ||
+    (String(id).startsWith('SHIFT-') && !SHIFT_NO.has(id)) ||
+    /^(RBAC-UI-|RBAC-ROLE-)/.test(String(id))
+      ? 'Yes'
+      : 'No';
   let priority = 'P2';
-  if (/^(LOGIN|USER-NAV|SHIFT-NAV)/.test(id) || /CREATE-0[1-6]$/.test(id) || /CREATE-36|CREATE-37/.test(id)) {
+  if (/^(LOGIN|USER-NAV|SHIFT-NAV|RBAC-UI)/.test(id) || /CREATE-0[1-6]$/.test(id) || /CREATE-36|CREATE-11/.test(id)) {
     priority = 'P0';
-  } else if (/USER-LIST-0[1-8]|USER-CREATE-|USER-EDIT-0[139]|USER-ASSIGN-01/.test(id)) {
+  } else if (/USER-LIST-0[1-8]|USER-CREATE-|USER-EDIT-0[139]|USER-ASSIGN-01|SHIFT-LIST-|SHIFT-CREATE-|SHIFT-EDIT-01/.test(id)) {
     priority = 'P1';
   }
   const skipReason = automated === 'No' ? SKIP_REASON[id] || 'Not automated yet' : '';

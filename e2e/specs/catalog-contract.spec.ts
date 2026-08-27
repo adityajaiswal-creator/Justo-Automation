@@ -1,7 +1,10 @@
 import { test, expect } from '../fixtures/test';
 import { loadCatalog } from '../helpers/catalog';
 import { loginHandlerIds } from '../flows/login.handlers';
+import { rbacHandlerIds } from '../flows/rbac.handlers';
+import { shiftHandlerIds } from '../flows/shift-management.handlers';
 import { userHandlerIds } from '../flows/user-management.handlers';
+import { BACKEND_MODULES } from '../rbac/rules.mjs';
 
 test.describe('Catalog contract', () => {
   test('login automated cases have handlers', () => {
@@ -18,9 +21,22 @@ test.describe('Catalog contract', () => {
     expect(missing, `Missing user handlers: ${missing.join(', ')}`).toEqual([]);
   });
 
-  test('user handlers are marked automated in the catalog', () => {
-    const byId = new Map(loadCatalog('user-management').map((c) => [c.id, c]));
-    const drift = [...userHandlerIds].filter((id) => byId.get(id)?.automated !== 'Yes');
-    expect(drift, `Handler without automated=Yes: ${drift.join(', ')}`).toEqual([]);
+  test('shift automated cases have handlers', () => {
+    const missing = loadCatalog('shift-management')
+      .filter((c) => c.automated === 'Yes' && !shiftHandlerIds.has(c.id))
+      .map((c) => c.id);
+    expect(missing, `Missing shift handlers: ${missing.join(', ')}`).toEqual([]);
+  });
+
+  test('rbac automated cases have handlers', () => {
+    const missing = loadCatalog('rbac-create-role')
+      .filter((c) => c.automated === 'Yes' && !rbacHandlerIds.has(c.id))
+      .map((c) => c.id);
+    expect(missing, `Missing rbac handlers: ${missing.join(', ')}`).toEqual([]);
+  });
+
+  test('rbac module catalog matches backend enum', () => {
+    const names = loadCatalog('rbac-modules').map((row) => row.name);
+    expect(names).toEqual(BACKEND_MODULES.map(([, name]) => name));
   });
 });

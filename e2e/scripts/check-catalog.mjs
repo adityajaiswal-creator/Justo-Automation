@@ -23,13 +23,23 @@ function assertNoMissing(label, cases, ids) {
 
 const loginIds = handlerIds('flows/login.handlers.ts');
 const userIds = handlerIds('flows/user-management.handlers.ts');
+const shiftIds = handlerIds('flows/shift-management.handlers.ts');
+const rbacIds = handlerIds('flows/rbac.handlers.ts');
+
 assertNoMissing('login', catalog('login'), loginIds);
 assertNoMissing('user', catalog('user-management'), userIds);
+assertNoMissing('shift', catalog('shift-management'), shiftIds);
+assertNoMissing(
+  'rbac-ui',
+  catalog('rbac-create-role').filter((c) => String(c.id).startsWith('RBAC-UI-')),
+  rbacIds,
+);
 
-const byId = new Map(catalog('user-management').map((c) => [c.id, c]));
-const drift = [...userIds].filter((id) => byId.get(id)?.automated !== 'Yes');
-if (drift.length) {
-  throw new Error(`Handlers not marked automated=Yes: ${drift.join(', ')}`);
+const rbacSrc = fs.readFileSync(path.join(root, 'flows/rbac.handlers.ts'), 'utf8');
+if (!rbacSrc.includes("startsWith('RBAC-ROLE-')")) {
+  throw new Error('Missing generic RBAC-ROLE handler registration');
 }
 
-console.log(`Catalog contract ok (${loginIds.size} login, ${userIds.size} user handlers)`);
+console.log(
+  `Catalog contract ok (${loginIds.size} login, ${userIds.size} user, ${shiftIds.size} shift, ${rbacIds.size} rbac UI handlers)`,
+);

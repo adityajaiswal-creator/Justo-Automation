@@ -18,10 +18,13 @@ npx playwright install chromium
 npm test                 # headless, all projects
 npm run test:headed      # headed local debug
 npm run test:login       # login project only
-npm run test:user        # user management (uses saved auth)
+npm run test:user        # user management
+npm run test:shift       # shift management
+npm run test:rbac        # RBAC create-role
 npm run test:user:smoke  # USER-NAV-01
 npm run lint
 npm run typecheck
+npm run check:catalog
 npm run cases:sync       # Excel/CSV → data/generated/*.json
 npm run report
 ```
@@ -40,13 +43,15 @@ npm run report
 
 ## CI
 
-GitHub Actions runs lint, typecheck, and the catalog-contract project on every PR.
+GitHub Actions runs lint, typecheck, and catalog contract on every PR.
 
-The headed-against-QA job runs only when the repo variable `E2E_ENABLED=true` and secrets `E2E_EMAIL` / `E2E_OTP` are set. Optional variable: `E2E_BASE_URL`.
+The QA Playwright job runs when `E2E_ENABLED=true` and secrets `E2E_EMAIL` / `E2E_OTP` are set. Optional: `E2E_BASE_URL`.
+
+RBAC role cases assert dependency auto-grants on the form. Only `RBAC-ROLE-001` saves a role unless `E2E_RBAC_SAVE=true`.
 
 ## Notes
 
-- One worker by default: tests share a QA tenant and user-scoped UI prefs.
-- Mutating user cases are serial and deactivate the created user in `afterAll`.
-- Shift and RBAC catalogs exist but are not on Playwright yet. Do not add leftover `.mjs` runners.
+- One worker by default: tests share a QA tenant.
+- Mutating user/shift cases are serial and clean up created records in `afterAll`.
+- Permission cases that need extra users stay `automated=No` with skip reasons.
 - `scripts/automation-flags.mjs` only seeds the first XLSX. After that, Excel is the source of truth.

@@ -8,9 +8,9 @@
     "clicks": "",
     "expected": "",
     "expectedResult": "Open /rbac-management/create-role; title Create Role; Save disabled until name, description, and at least one permission",
-    "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "priority": "P0",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -22,9 +22,9 @@
     "clicks": "User:Read All",
     "expected": "User:Read+Read All",
     "expectedResult": "Empty role name shows Role name is required; save stays disabled",
-    "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "priority": "P0",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -36,9 +36,9 @@
     "clicks": "",
     "expected": "",
     "expectedResult": "Empty description shows Description is required; save stays disabled",
-    "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "priority": "P0",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -50,9 +50,9 @@
     "clicks": "",
     "expected": "",
     "expectedResult": "Save with zero permissions shows At least one permission must be selected",
-    "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "priority": "P0",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -65,8 +65,8 @@
     "expected": "Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -79,8 +79,8 @@
     "expected": "User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -93,8 +93,8 @@
     "expected": "User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -107,8 +107,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Create+Read|Note:Read|Pipeline:Read|Project:Read|Site Visit:Read|Task:Read|User:Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -121,8 +121,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -135,8 +135,8 @@
     "expected": "Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Pii Data+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -149,8 +149,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Edit All+Pii Data+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -163,8 +163,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -177,8 +177,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Delete All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -191,8 +191,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -205,8 +205,8 @@
     "expected": "Import Export:Read|Lead:Import+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -219,8 +219,8 @@
     "expected": "Import Export:Read|Lead:Export+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -233,8 +233,8 @@
     "expected": "Lead:Call+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -247,8 +247,8 @@
     "expected": "Lead:Communication+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -261,8 +261,8 @@
     "expected": "Lead:Bulk Communication+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -275,8 +275,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -289,8 +289,8 @@
     "expected": "Lead:Pii Data+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -303,8 +303,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Create+Read|Note:Read|Pipeline:Read|Project:Read|Role:Read|Shift:Read|Site Visit:Read|Task:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -317,8 +317,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Read+Read All|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -331,8 +331,8 @@
     "expected": "Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Pii Data+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -345,8 +345,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Edit All+Pii Data+Read+Read All|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -359,8 +359,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -373,8 +373,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Delete All+Read+Read All|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -387,8 +387,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -401,8 +401,8 @@
     "expected": "Import Export:Read|Lead:Import+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -415,8 +415,8 @@
     "expected": "Import Export:Read|Lead:Export+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -429,8 +429,8 @@
     "expected": "Lead:Call+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -443,8 +443,8 @@
     "expected": "Lead:Communication+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -457,8 +457,8 @@
     "expected": "Lead:Bulk Communication+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -471,8 +471,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -485,8 +485,8 @@
     "expected": "Lead:Pii Data+Read|Role:Read|Shift:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -499,8 +499,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Create+Read|Note:Read|Pipeline:Read|Project:Read|Site Visit:Read|Task:Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -513,8 +513,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Read+Read All|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -527,8 +527,8 @@
     "expected": "Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Pii Data+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -541,8 +541,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Edit All+Pii Data+Read+Read All|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -555,8 +555,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -569,8 +569,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Delete All+Read+Read All|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -583,8 +583,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -597,8 +597,8 @@
     "expected": "Import Export:Read|Lead:Import+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -611,8 +611,8 @@
     "expected": "Import Export:Read|Lead:Export+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -625,8 +625,8 @@
     "expected": "Lead:Call+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -639,8 +639,8 @@
     "expected": "Lead:Communication+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -653,8 +653,8 @@
     "expected": "Lead:Bulk Communication+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -667,8 +667,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -681,8 +681,8 @@
     "expected": "Lead:Pii Data+Read|User:Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -695,8 +695,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Create+Read|Note:Read|Pipeline:Read|Project:Read|Site Visit:Read|Task:Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -709,8 +709,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Read+Read All|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -723,8 +723,8 @@
     "expected": "Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Pii Data+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -737,8 +737,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Edit+Edit All+Pii Data+Read+Read All|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -751,8 +751,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -765,8 +765,8 @@
     "expected": "Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Delete+Delete All+Read+Read All|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -779,8 +779,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -793,8 +793,8 @@
     "expected": "Import Export:Read|Lead:Import+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -807,8 +807,8 @@
     "expected": "Import Export:Read|Lead:Export+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -821,8 +821,8 @@
     "expected": "Lead:Call+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -835,8 +835,8 @@
     "expected": "Lead:Communication+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -849,8 +849,8 @@
     "expected": "Lead:Bulk Communication+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -863,8 +863,8 @@
     "expected": "Lead:Bulk Actions+Edit+Edit All+Reassign|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -877,8 +877,8 @@
     "expected": "Lead:Pii Data+Read|User:Activate Or Deactivate+Assign All/Unassign All+Edit+Edit All+Read+Read All",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -891,8 +891,8 @@
     "expected": "Project:Activate Or Deactivate+Create+Read|Team:Read|User:Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -905,8 +905,8 @@
     "expected": "Campaign:Activate Or Deactivate+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -919,8 +919,8 @@
     "expected": "Pipeline:Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -933,8 +933,8 @@
     "expected": "Lead:Read|Project:Read|Task:Assign/Unassign+Create+Read|User:Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -947,8 +947,8 @@
     "expected": "Lead:Read|Note:Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -961,8 +961,8 @@
     "expected": "Lead:Read|Site Visit:Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -975,8 +975,8 @@
     "expected": "Team:Create+Read|User:Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -989,8 +989,8 @@
     "expected": "Shift:Create+Read|User:Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -1003,8 +1003,8 @@
     "expected": "Role:Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -1017,8 +1017,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Note:Read|Opportunity:Create+Read|Pipeline:Read|Project:Read|Site Visit:Read|Task:Read|User:Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -1031,8 +1031,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Create+Read|Note:Read|Pipeline:Read|Project:Activate Or Deactivate+Create+Read|Role:Read|Shift:Read|Site Visit:Read|Task:Read|Team:Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -1045,8 +1045,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Create+Read|Note:Read|Pipeline:Read|Project:Read|Role:Read|Shift:Read|Site Visit:Read|Task:Assign/Unassign+Create+Read|User:Activate Or Deactivate+Assign All/Unassign All+Assign/Unassign+Create+Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   },
   {
@@ -1059,8 +1059,8 @@
     "expected": "Campaign:Read|Channel Partner:Read+Read All|Custom Attribute:Read+Read All|Custom Layout:Read+Read All|Lead:Create+Read|Note:Create+Read|Pipeline:Read|Project:Read|Site Visit:Create+Read|Task:Read|User:Read",
     "expectedResult": "Role is created; list shows the new role; selected permissions include dependencyRules auto-grants",
     "priority": "P2",
-    "automated": "No",
-    "skipReason": "Not automated yet",
+    "automated": "Yes",
+    "skipReason": "",
     "tags": ""
   }
 ]

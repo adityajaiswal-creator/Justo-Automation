@@ -10,13 +10,20 @@ export type CatalogCase = {
   env?: string;
   priority?: string;
   automated: string;
-  title: string;
+  title?: string;
+  description?: string;
   precondition?: string;
   steps?: string;
   data?: string;
   expected?: string;
   tags?: string;
   skipReason?: string;
+  type?: string;
+  save?: string;
+  roleName?: string;
+  clicks?: string;
+  expectedResult?: string;
+  name?: string;
 };
 
 export function loadCatalog(name: string): CatalogCase[] {
@@ -31,6 +38,17 @@ export function uniqueUser() {
     email: `auto.um.${stamp}@idx.com`,
     phone: `98${stamp}01`,
     name: `Auto${stamp}`,
+  };
+}
+
+export function uniqueShift() {
+  const stamp = Date.now().toString().slice(-6);
+  return {
+    stamp,
+    name: `auto_shift_${stamp}`,
+    weekdays: `auto_shift_weekdays_${stamp}`,
+    night: `auto_shift_night_${stamp}`,
+    clone: `auto_shift_clone_${stamp}`,
   };
 }
 
