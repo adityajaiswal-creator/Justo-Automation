@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "playwright-mcp": {
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/aditya.jaiswal/Desktop/AUTOMATION/playwright-mcp/cli.js"
+      ],
+      "env": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "npm_config_prefix": "/usr/local"
+      }
+    }
+  }
+}

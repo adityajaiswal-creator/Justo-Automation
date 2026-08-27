@@ -1,0 +1,8 @@
+id,module,env,title,precondition,steps,data,expected
+LOGIN-01,Login,UAT,Open UAT login page,None,1. Open URL,https://uat.manthan.justo.co.in/auth/login,"Page shows heading Secure Login; Email or Phone Number field; Send OTP button; Login with email and password link"
+LOGIN-02,Login,UAT,Send OTP stays disabled when field is empty,LOGIN-01 passed,1. Keep Email or Phone Number empty 2. Check Send OTP,,"Send OTP button is disabled"
+LOGIN-03,Login,UAT,Switch to email and password login,LOGIN-01 passed,1. Click Login with email and password,,"Password form is shown with Email address; Password; Login button; Back to OTP login"
+LOGIN-04,Login,UAT,Password login is blocked for OTP-only account,On password form,1. Enter email 2. Enter password 3. Click Login,email=admin@idx.com; password=456789,"Alert: Login via Email/Password is not allowed for your account. Please use an allowed login method. URL stays /auth/login"
+LOGIN-05,Login,UAT,Back to OTP login,On password form after LOGIN-04,1. Click Back to OTP login,,"OTP form is shown again with Email or Phone Number and Send OTP"
+LOGIN-06,Login,UAT,Send OTP with valid email,On OTP form,1. Enter email 2. Click Send OTP 3. If Browser Notifications Blocked dialog appears click Proceed to Login,email=admin@idx.com,"Verification code screen is shown; text says code sent to admin@idx.com; 6 OTP boxes; Verify & login is disabled"
+LOGIN-07,Login,UAT,Valid OTP logs user into UAT,On verification screen from LOGIN-06,1. Enter OTP 456789 automatically 2. Click Verify & login,otp=456789,"URL leaves /auth/login; user is inside the app (dashboard or module landing page)"

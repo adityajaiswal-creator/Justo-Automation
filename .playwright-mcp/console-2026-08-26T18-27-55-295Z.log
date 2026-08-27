@@ -1,0 +1,7 @@
+[     262ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://uat.manthan.justo.co.in/auth/login:0
+[    2581ms] [LOG] [FCM] PWA service worker ready @ https://uat.manthan.justo.co.in/assets/index-Df3R2GhA.js:5138
+[    2582ms] [LOG] [FCM] Messaging initialized successfully @ https://uat.manthan.justo.co.in/assets/index-Df3R2GhA.js:5138
+[    2583ms] [LOG] [FCM] PWA service worker ready @ https://uat.manthan.justo.co.in/assets/index-Df3R2GhA.js:5138
+[    2583ms] [LOG] [FCM] Messaging initialized successfully @ https://uat.manthan.justo.co.in/assets/index-Df3R2GhA.js:5138
+[   33897ms] [ERROR] Failed to load resource: the server responded with a status of 403 () @ https://api.uat.manthan.justo.co.in/api/v1/auth/login:0
+[  156571ms] [LOG] [FCM] Messaging initialized successfully @ https://uat.manthan.justo.co.in/assets/index-Df3R2GhA.js:5138

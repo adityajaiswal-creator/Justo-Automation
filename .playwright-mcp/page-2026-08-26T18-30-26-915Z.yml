@@ -1,0 +1,78 @@
+- generic:
+  - generic:
+    - generic:
+      - generic:
+        - generic: Transform your real estate operations effortlessly with Justo!
+        - generic:
+          - generic:
+            - generic:
+              - heading [level=3]: Secure Login
+              - paragraph: Enter your registered email or phone number to receive an OTP.
+            - generic:
+              - generic:
+                - generic:
+                  - text: Email or Phone Number
+                  - generic: "*"
+                - generic:
+                  - textbox:
+                    - /placeholder: Enter your email or phone number
+                    - text: admin@idx.com
+              - button: Send OTP
+              - button: Login with email and password
+      - generic:
+        - link:
+          - /url: /terms-and-conditions
+          - text: •Terms and Conditions
+        - link:
+          - /url: /privacy-policy
+          - text: •Privacy Policy
+    - region "Notifications alt+T"
+  - dialog [ref=e58]:
+    - heading "Browser Notifications Blocked" [level=2] [ref=e59]
+    - paragraph [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - heading "🔔 Enable Browser Notifications" [level=3] [ref=e65]
+          - paragraph [ref=e66]: To make sure you don't miss any important updates, reminders, or alerts from this application, you need to enable browser notifications.
+        - generic [ref=e67]:
+          - paragraph [ref=e68]: "Notifications will help you receive:"
+          - list [ref=e69]:
+            - listitem [ref=e70]: New activity alerts
+            - listitem [ref=e71]: Important updates
+            - listitem [ref=e72]: Real-time messages
+            - listitem [ref=e73]: Cloud Telephony calls updates
+        - generic [ref=e74]:
+          - paragraph [ref=e75]: "Step-by-step instructions:"
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - paragraph [ref=e78]: "Step 1:"
+              - paragraph [ref=e79]: When you open this application, your browser will show a small message at the top of the screen, near the website address.
+            - generic [ref=e80]:
+              - paragraph [ref=e81]: "Step 2:"
+              - paragraph [ref=e82]: The message will ask something like "Allow notifications for this site?"
+            - generic [ref=e83]:
+              - paragraph [ref=e84]: "Step 3:"
+              - paragraph [ref=e85]: Click the Allow button.
+              - paragraph [ref=e86]: Once you click Allow, notifications will start working immediately.
+        - generic [ref=e87]:
+          - paragraph [ref=e88]: "If you do NOT see the notification message:"
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - paragraph [ref=e91]: "Step 1:"
+              - paragraph [ref=e92]: Click the lock icon 🔒 located next to the website address (URL bar).
+            - generic [ref=e93]:
+              - paragraph [ref=e94]: "Step 2:"
+              - paragraph [ref=e95]: Find the option called Notifications.
+            - generic [ref=e96]:
+              - paragraph [ref=e97]: "Step 3:"
+              - paragraph [ref=e98]: Change the setting to Allow.
+              - img "Notification settings" [ref=e100]
+            - generic [ref=e101]:
+              - paragraph [ref=e102]: "Step 4:"
+              - paragraph [ref=e103]: Refresh (reload) the page.
+        - generic [ref=e104]:
+          - paragraph [ref=e105]: ✅ After completing these steps, you will start receiving alerts and updates from this application.
+          - paragraph [ref=e106]: ⚠️ If notifications are blocked, you may miss important information.
+    - button "Proceed to Login" [active] [ref=e108] [cursor=pointer]
+    - button "Close" [ref=e109]:
+      - img [ref=e110] [cursor=pointer]

@@ -1,0 +1,42 @@
+id,name,source
+1,"User",backend Resource enum
+2,"Role",backend Resource enum
+3,"Lead",backend Resource enum
+4,"Project",backend Resource enum
+5,"Campaign",backend Resource enum
+6,"Shift",backend Resource enum
+7,"Team",backend Resource enum
+8,"Pipeline",backend Resource enum
+9,"Task",backend Resource enum
+10,"Note",backend Resource enum
+11,"Site Visit",backend Resource enum
+12,"Import Export",backend Resource enum
+13,"Scoring",backend Resource enum
+14,"Routing",backend Resource enum
+15,"Channel Partner",backend Resource enum
+16,"Portal Management",backend Resource enum
+17,"Token Management",backend Resource enum
+18,"Driver Management",backend Resource enum
+19,"Pickup Request Management",backend Resource enum
+20,"Kyc",backend Resource enum
+21,"Cheque Clearance",backend Resource enum
+22,"Cti Config",backend Resource enum
+23,"Leadgen Connector",backend Resource enum
+24,"Opportunity",backend Resource enum
+25,"Contact",backend Resource enum
+26,"Custom Attribute",backend Resource enum
+27,"GRE Walk In Visitors",backend Resource enum
+28,"Custom Layout",backend Resource enum
+29,"User Announcement",backend Resource enum
+30,"AI Prompt",backend Resource enum
+31,"Dashboard",backend Resource enum
+32,"Dashboard Report",backend Resource enum
+33,"Booking Management",backend Resource enum
+34,"Geo Location",backend Resource enum
+35,"Presales Dashboard",backend Resource enum
+36,"CP Meeting",backend Resource enum
+37,"Master Setting",backend Resource enum
+38,"Project Daily Report",backend Resource enum
+39,"Inventory",backend Resource enum
+40,"Inventory Booking",backend Resource enum
+41,"User Adaptation Report",backend Resource enum

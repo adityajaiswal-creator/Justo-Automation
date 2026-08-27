@@ -1,0 +1,39 @@
+- generic [ref=f1e2]:
+  - generic [ref=f1e3]:
+    - generic [ref=f1e4]:
+      - generic [ref=f1e6]:
+        - img "Login Illustration" [ref=f1e7]
+        - generic [ref=f1e8]: Transform your real estate operations effortlessly with Justo!
+      - generic [ref=f1e10]:
+        - img "Justo Logo" [ref=f1e12]
+        - generic [ref=f1e114]:
+          - button "Go back to Login" [ref=f1e115] [cursor=pointer]
+          - heading "Verification code" [level=3] [ref=f1e118]
+          - paragraph [ref=f1e119]: Please enter the 6-digit verification code sent to your email - admin@idx.com
+        - generic [ref=f1e120]:
+          - generic [ref=f1e121]: OTP
+          - generic [ref=f1e122]:
+            - textbox "OTP digit 1" [active] [ref=f1e123]:
+              - /placeholder: "-"
+            - textbox "OTP digit 2" [ref=f1e124]:
+              - /placeholder: "-"
+            - textbox "OTP digit 3" [ref=f1e125]:
+              - /placeholder: "-"
+            - generic [ref=f1e126]: "-"
+            - textbox "OTP digit 4" [ref=f1e127]:
+              - /placeholder: "-"
+            - textbox "OTP digit 5" [ref=f1e128]:
+              - /placeholder: "-"
+            - textbox "OTP digit 6" [ref=f1e129]:
+              - /placeholder: "-"
+          - generic [ref=f1e130]: OTP will expire in 04:53
+          - button "Verify & login" [disabled] [ref=f1e131]
+        - generic [ref=f1e133]:
+          - text: Didn't receive an OTP?
+          - button "Resend OTP" [disabled] [ref=f1e134]
+    - generic [ref=f1e24]:
+      - link "•Terms and Conditions" [ref=f1e25] [cursor=pointer]:
+        - /url: /terms-and-conditions
+      - link "•Privacy Policy" [ref=f1e26] [cursor=pointer]:
+        - /url: /privacy-policy
+  - region "Notifications alt+T"

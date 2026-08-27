@@ -1,0 +1,5 @@
+[    3766ms] [INFO] This document requires 'TrustedHTML' assignment. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.google.com/gmail/about/signup_complete.html:64
+[    3768ms] [INFO] This document requires 'TrustedScriptURL' assignment. The policy is report-only, so the violation has been logged but no further action has been taken. @ https://www.google.com/js/google.js:6
+[    3927ms] [ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ https://2542116.fls.doubleclick.net/activityi;src=2542116;type=gmail862;cat=gmail000;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=570619277973.763?:0
+[    3983ms] [LOG] language is set to:en @ https://2542116.fls.doubleclick.net/activityi;src=2542116;type=gmail862;cat=gmail000;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord=570619277973.763?:351
+[    4270ms] [LOG] redirecting... @ https://www.google.com/gmail/about/signup_complete.html:101

@@ -1,0 +1,13 @@
+{
+  "name": "manthan-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "cases:sync": "node scripts/sync-cases.mjs",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:login": "playwright test specs/login.spec.ts --headed",
+    "test:user": "playwright test specs/user-management.spec.ts --headed",
+    "report": "playwright show-report"
+  }
+}
