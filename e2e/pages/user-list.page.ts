@@ -18,7 +18,7 @@ export class UserListPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.heading = page.getByRole('heading', { name: /user management/i }).or(page.getByText('User Management', { exact: true })).first();
+    this.heading = page.getByText('User Management', { exact: true }).first();
     this.search = page.getByPlaceholder('Search by Name, Phone');
     this.createButton = page.getByTestId('create-new-user-button');
     this.syncButton = page.getByTestId('sync-data-button');
